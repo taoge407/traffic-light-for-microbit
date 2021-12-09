@@ -1,11 +1,27 @@
 let lightStatus = 0
+let ms = 0
 basic.forever(function () {
-    lightStatus = 0
-    pins.digitalWritePin(DigitalPin.P1, 0)
-    basic.pause(5000)
-    lightStatus = 1
-    pins.digitalWritePin(DigitalPin.P1, 1)
-    basic.pause(30000)
+    if (lightStatus == 0) {
+        pins.digitalWritePin(DigitalPin.P0, 1)
+    } else {
+        pins.digitalWritePin(DigitalPin.P0, 0)
+    }
+})
+basic.forever(function () {
+    if (ms == 0) {
+        if (lightStatus == 0) {
+            lightStatus = 1
+            ms = 30000
+            basic.pause(100)
+        } else {
+            lightStatus = 0
+            ms = 20000
+            basic.pause(100)
+        }
+    } else {
+        basic.pause(1)
+        ms += -1
+    }
 })
 basic.forever(function () {
     if (lightStatus == 1) {
